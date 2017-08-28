@@ -1,6 +1,6 @@
 let cherrio = require("cheerio");
 let http = require("http");
-let multer = require("nodemailer");
+let nodemailer = require("nodemailer");
 let rootURL = "http://www.zjhospital.com.cn/";
 let ralativePath = "hpzp.php";
 let url = rootURL + ralativePath;
@@ -35,11 +35,27 @@ http.get(url, sres => {
   });
 });
 
-let mailTransport = nodemailer.createTransport({
-  host: "smtp.sina.com",
+let tarnsporter = nodemailer.createTransport({
+  host: "smtp.qq.com",
   secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
+  port: 465, // SMTP 端口
   auth: {
-    user: "你的邮箱地址",
-    pass: "你的邮箱密码"
+    user: "435008948@qq.com",
+    pass: "liyann159357"
   }
+});
+
+let mailOptions = {
+  from: "<435008948@qq.com>",
+  to: "yannan_li@foxmail.com",
+  subject: "hello world",
+  text: "hello world?",
+  html: "<b>Hello world<b>"
+};
+
+tarnsporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    return console.log(error);
+  }
+  console.log("Message %s sent: %s", info.messageId, info.response);
 });
